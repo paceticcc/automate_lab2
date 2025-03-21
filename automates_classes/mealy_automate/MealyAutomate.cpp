@@ -120,9 +120,9 @@ void MealyAutomate::deleteUnattainableStatements()
 		{
 			it->isAttainable = true;
 			int statementIndex = distance(MealyAutomate::attainableStatements.begin(), it);
-			for (int i = 1; i < MealyAutomate::data[statementIndex].size(); i++)
+			for (int i = 1; i < MealyAutomate::data[statementIndex + 1].size(); i++)
 			{
-				string statement = split(MealyAutomate::data[statementIndex][i], '/')[0];
+				string statement = split(MealyAutomate::data[statementIndex + 1][i], '/')[0];
 				if (statement != "-")
 					BFSQueue.push(statement);
 			}
@@ -145,7 +145,7 @@ vector<vector<string>> MealyAutomate::getMinimizedAutomate() const
 	bool isMinimized = false;
 	vector<EquivalenceClass> prevEquivalenceClasses;
 	vector<EquivalenceClass> currEquivalenceClasses;
-	int classesCount = 1;
+	int classesCount = 0;
 	for (auto statement = MealyAutomate::data.begin() + 1; statement != MealyAutomate::data.end(); statement++)
 	{
 		vector<string> outputSignals;
@@ -156,7 +156,7 @@ vector<vector<string>> MealyAutomate::getMinimizedAutomate() const
 		}
 		if (prevEquivalenceClasses.empty())
 		{
-			EquivalenceClass equivalenceClass{ classesCount++, 1, outputSignals, *(new set<string>{*statement->begin()})};
+			EquivalenceClass equivalenceClass{ ++classesCount, 1, outputSignals, *(new set<string>{*statement->begin()})};
 			prevEquivalenceClasses.push_back(equivalenceClass);
 		}
 		else
@@ -173,7 +173,7 @@ vector<vector<string>> MealyAutomate::getMinimizedAutomate() const
 			}
 			if (!isFound)
 			{
-				EquivalenceClass equivalenceClass{ classesCount++, 1, outputSignals, *(new set<string>{*statement->begin()}) };
+				EquivalenceClass equivalenceClass{ ++classesCount, 1, outputSignals, *(new set<string>{*statement->begin()}) };
 				prevEquivalenceClasses.push_back(equivalenceClass);
 			}
 		}
@@ -216,7 +216,7 @@ vector<vector<string>> MealyAutomate::getMinimizedAutomate() const
 				}
 				if (currEquivalenceClasses.empty())
 				{
-					EquivalenceClass newEquivalenceClass{ classesCount++, equivalenceClass.classNum, transitions,
+					EquivalenceClass newEquivalenceClass{ ++classesCount, equivalenceClass.classNum, transitions,
 														  *(new set<string>{ statement }) };
 					currEquivalenceClasses.push_back(newEquivalenceClass);
 				}
@@ -234,7 +234,7 @@ vector<vector<string>> MealyAutomate::getMinimizedAutomate() const
 					}
 					if (!isFound)
 					{
-						EquivalenceClass newEquivalenceClass{ classesCount++, equivalenceClass.classNum, transitions,
+						EquivalenceClass newEquivalenceClass{ ++classesCount, equivalenceClass.classNum, transitions,
 															  *(new set<string>{ statement }) };
 						currEquivalenceClasses.push_back(newEquivalenceClass);
 					}
@@ -250,7 +250,7 @@ vector<vector<string>> MealyAutomate::getMinimizedAutomate() const
 	for (EquivalenceClass equivalenceClass : currEquivalenceClasses)
 	{
 		vector<string> statement;
-		statement.push_back("X" + to_string(equivalenceClass.classNum + 1));
+		statement.push_back("X" + to_string(equivalenceClass.classNum));
 		int i = 1;
 		bool isFound = false;
 		while (!isFound)

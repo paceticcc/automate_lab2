@@ -105,9 +105,9 @@ void MooreAutomate::deleteUnattainableStatements()
 		{
 			it->isAttainable = true;
 			int statementIndex = distance(MooreAutomate::attainableStatements.begin(), it);
-			for (int i = 2; i < MooreAutomate::data[statementIndex].size(); i++)
+			for (int i = 2; i < MooreAutomate::data[statementIndex + 1].size(); i++)
 			{
-				string statement = split(MooreAutomate::data[statementIndex][i], '/')[0];
+				string statement = split(MooreAutomate::data[statementIndex + 1][i], '/')[0];
 				if (statement != "-")
 					BFSQueue.push(statement);
 			}
@@ -130,14 +130,14 @@ vector<vector<string>> MooreAutomate::getMinimizedAutomate() const
 	bool isMinimized = false;
 	vector<EquivalenceClass> prevEquivalenceClasses;
 	vector<EquivalenceClass> currEquivalenceClasses;
-	int classesCount = 1;
+	int classesCount = 0;
 	for (auto statement = MooreAutomate::data.begin() + 1; statement != MooreAutomate::data.end(); statement++)
 	{
 		vector<string> outputSignal{ *statement->begin() };
 		if (prevEquivalenceClasses.empty())
 		{
 			EquivalenceClass equivalenceClass{ 
-				classesCount++,
+				++classesCount,
 				1,
 				outputSignal,
 				*(new set<string>{ *(statement->begin() + 1)}) 
@@ -159,7 +159,7 @@ vector<vector<string>> MooreAutomate::getMinimizedAutomate() const
 			if (!isFound)
 			{
 				EquivalenceClass equivalenceClass{ 
-					classesCount++,
+					++classesCount,
 					1,
 					outputSignal,
 					*(new set<string>{ *(statement->begin() + 1)}) 
@@ -207,7 +207,7 @@ vector<vector<string>> MooreAutomate::getMinimizedAutomate() const
 				if (currEquivalenceClasses.empty())
 				{
 					EquivalenceClass newEquivalenceClass{ 
-						classesCount++,
+						++classesCount,
 						equivalenceClass.classNum,
 						transitions,
 						*(new set<string>{ statement }) 
@@ -229,7 +229,7 @@ vector<vector<string>> MooreAutomate::getMinimizedAutomate() const
 					if (!isFound)
 					{
 						EquivalenceClass newEquivalenceClass{ 
-							classesCount++,
+							++classesCount,
 							equivalenceClass.classNum,
 							transitions,
 							*(new set<string>{ statement }) 
