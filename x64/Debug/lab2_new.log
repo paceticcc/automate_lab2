@@ -1,7 +1,7 @@
-﻿  MealyAutomate.cpp
-D:\automate\lab2_new\lab2_new\automates_classes\mealy_automate\MealyAutomate.cpp(58,12): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-D:\automate\lab2_new\lab2_new\automates_classes\mealy_automate\MealyAutomate.cpp(80,12): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-D:\automate\lab2_new\lab2_new\automates_classes\mealy_automate\MealyAutomate.cpp(122,23): warning C4244: инициализация: преобразование "__int64" в "int", возможна потеря данных
-D:\automate\lab2_new\lab2_new\automates_classes\mealy_automate\MealyAutomate.cpp(97,1): warning C4715: MealyAutomate::binarySearchInData: значение возвращается не при всех путях выполнения
-D:\automate\lab2_new\lab2_new\automates_classes\mealy_automate\MealyAutomate.cpp(75,1): warning C4715: MealyAutomate::binarySearchInAttainableStatements: значение возвращается не при всех путях выполнения
+﻿  MooreAutomate.cpp
+D:\automate\lab2_new\lab2_new\automates_classes\moore_automate\MooreAutomate.cpp(54,12): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\automate\lab2_new\lab2_new\automates_classes\moore_automate\MooreAutomate.cpp(76,12): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\automate\lab2_new\lab2_new\automates_classes\moore_automate\MooreAutomate.cpp(118,23): warning C4244: инициализация: преобразование "__int64" в "int", возможна потеря данных
+D:\automate\lab2_new\lab2_new\automates_classes\moore_automate\MooreAutomate.cpp(71,1): warning C4715: MooreAutomate::binarySearchInAttainableStatements: значение возвращается не при всех путях выполнения
+D:\automate\lab2_new\lab2_new\automates_classes\moore_automate\MooreAutomate.cpp(93,1): warning C4715: MooreAutomate::binarySearchInData: значение возвращается не при всех путях выполнения
   lab2_new.vcxproj -> D:\automate\lab2_new\x64\Debug\lab2_new.exe

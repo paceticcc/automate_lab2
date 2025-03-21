@@ -10,17 +10,28 @@ void MooreAutomate::setData(std::ifstream& input)
 	string str = "";
 	getline(input, str);
 	vector<string> strSplit = split(str, ';');
-	for (int i = 0; i < strSplit.size(); i++)
+	if (strSplit.size() > 1)
 	{
-		vector<string> statement{ strSplit[i] };
-		MooreAutomate::data.push_back(statement);
+		MooreAutomate::data.push_back(vector<string>{ strSplit[0] });
+		for (int i = 1; i < strSplit.size(); i++)
+		{
+			vector<string> statement{ strSplit[i] };
+			MooreAutomate::data.push_back(statement);
+		}
+	}
+	else
+	{
+		throw;
 	}
 	getline(input, str);
 	strSplit = split(str, ';');
-	for (int i = 0; i < strSplit.size(); i++)
+	MooreAutomate::data[0].push_back(strSplit[0]);
+	for (int i = 1; i < strSplit.size(); i++)
 	{
+		MooreAutomate::attainableStatements.push_back({ strSplit[i], false });
 		MooreAutomate::data[i].push_back(strSplit[i]);
 	}
+	MooreAutomate::attainableStatements[0].isAttainable = true;
 	getline(input, str);
 	strSplit = split(str, ';');
 	while (true)
@@ -86,7 +97,7 @@ void MooreAutomate::deleteUnattainableStatements()
 	queue<string> BFSQueue;
 	for (int i = 2; i < MooreAutomate::data[1].size(); i++)
 	{
-		string statement = split(MooreAutomate::data[1][i], '/')[0];
+		string statement = MooreAutomate::data[1][i];
 		if (statement != "-")
 			BFSQueue.push(statement);
 	}
@@ -107,7 +118,7 @@ void MooreAutomate::deleteUnattainableStatements()
 			int statementIndex = distance(MooreAutomate::attainableStatements.begin(), it);
 			for (int i = 2; i < MooreAutomate::data[statementIndex + 1].size(); i++)
 			{
-				string statement = split(MooreAutomate::data[statementIndex + 1][i], '/')[0];
+				string statement = MooreAutomate::data[statementIndex + 1][i];
 				if (statement != "-")
 					BFSQueue.push(statement);
 			}
